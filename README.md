@@ -28,6 +28,15 @@ let
           Image Gif ->
             "Successfully parsed as gif image"
 
+          Image Ico ->
+            "Successfully parsed as ico image"
+
+          Image Svg ->
+            "Successfully parsed as svg image"
+
+          Image Webp ->
+            "Successfully parsed as webp image"
+
           Image (OtherImage other)
             "Unrecognized image format: " ++ other
 
