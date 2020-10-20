@@ -11,7 +11,7 @@ classify files dropped into the browser via the HTML5 Drag and Drop api.
 
 This library ATM provides only an incomplete, somewhat arbitrary mapping of the most common
 browser mime types.
-See [https://code.google.com/p/chromium/codesearch#chromium/src/net/base/mime\_util.cc&l=201](https://code.google.com/p/chromium/codesearch#chromium/src/net/base/mime_util.cc&l=201)
+See <https://code.google.com/p/chromium/codesearch#chromium/src/net/base/mime_util.cc&l=201>
 for a full list of Mime types as implemented in chromium.
 
 
@@ -40,6 +40,9 @@ type MimeImage
     = Jpeg
     | Png
     | Gif
+    | Ico
+    | Svg
+    | Webp
     | OtherImage String
 
 
@@ -104,14 +107,11 @@ type MimeType
     -- normal use of a type/subtype that is modelled:
     parseMimeType "image/jpeg" == Just (Image Jpeg)
 
-
     -- use of a subtype that is not modelled ATM
     parseMimeType "image/tiff" == Just (Image OtherImage)
 
-
     -- use with an empty string
     parseMimeType "" == Nothing
-
 
     -- use with something else
     parseMimeType "bla" == Just OtherMimeType
@@ -131,6 +131,15 @@ parseMimeType mimeString =
 
         "image/gif" ->
             Just <| Image Gif
+
+        "image/x-icon" ->
+            Just <| Image Ico
+
+        "image/svg+xml" ->
+            Just <| Image Svg
+
+        "image/webp" ->
+            Just <| Image Webp
 
         "audio/mp3" ->
             Just <| Audio Mp3
@@ -234,6 +243,15 @@ toString mimeType =
 
                 Gif ->
                     "image/gif"
+
+                Ico ->
+                    "image/x-icon"
+
+                Svg ->
+                    "image/svg+xml"
+
+                Webp ->
+                    "image/webp"
 
                 OtherImage type_ ->
                     "image/" ++ type_
